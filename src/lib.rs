@@ -1,5 +1,6 @@
 use pyo3::prelude::*;
 use pyo3::types::PyList;
+use pyo3::types::PyFloat;
 
 /// Formats the sum of two numbers as string.
 #[pyfunction]
@@ -36,10 +37,29 @@ fn list_to_string(input: &PyList) -> PyResult<String> {
     Ok(result)
 }
 
+/// apply scalar to vector
+#[pyfunction]
+fn scale_list(vector: &PyList, scale: f64) -> PyResult<()> {
+    for index in 0..vector.len() {
+        let item = vector.get_item(index);
+        let element = match item {
+            Ok(obj) => obj,
+            Err(e) => return Err(e),
+        };
+
+        let value = element.extract::<f64>()?;
+
+        vector.set_item(index, PyFloat::new(vector.py(), value * scale))?;
+    }
+
+    Ok(())
+}
+
 /// A Python module implemented in Rust.
 #[pymodule]
 fn linalg(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(sum_as_string, m)?)?;
     m.add_function(wrap_pyfunction!(list_to_string, m)?)?;
+    m.add_function(wrap_pyfunction!(scale_list, m)?)?;
     Ok(())
 }
