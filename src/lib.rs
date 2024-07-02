@@ -1,6 +1,5 @@
 use pyo3::prelude::*;
-use pyo3::types::PyList;
-use pyo3::types::PyFloat;
+use pyo3::types::{PyList, PyFloat};
 
 /// Formats the sum of two numbers as string.
 #[pyfunction]
