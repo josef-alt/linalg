@@ -1,5 +1,6 @@
 use pyo3::prelude::*;
 use pyo3::types::{PyList, PyFloat};
+use pyo3::exceptions::PyTypeError;
 
 /// Formats the sum of two numbers as string.
 #[pyfunction]
@@ -54,11 +55,39 @@ fn scale_list(vector: &PyList, scale: f64) -> PyResult<()> {
     Ok(())
 }
 
+/// compute dot product of lists
+#[pyfunction]
+fn list_dot_product(a: &PyList, b: &PyList) -> PyResult<f64> {
+    let mut sum: f64 = 0.0;
+
+    let a_len = a.len();
+    let b_len = b.len();
+    if a_len != b_len {
+        return Err(PyTypeError::new_err("lists must be same length"))
+    }
+
+    for index in 0..a_len {
+        let a_val = match a.get_item(index) {
+            Ok(obj) => obj.extract::<f64>()?,
+            Err(e) => return Err(e),
+        };
+        let b_val = match b.get_item(index) {
+            Ok(obj) => obj.extract::<f64>()?,
+            Err(e) => return Err(e),
+        };
+        
+        sum += a_val * b_val;
+    }
+
+    Ok(sum)
+}
+
 /// A Python module implemented in Rust.
 #[pymodule]
 fn linalg(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(sum_as_string, m)?)?;
     m.add_function(wrap_pyfunction!(list_to_string, m)?)?;
     m.add_function(wrap_pyfunction!(scale_list, m)?)?;
+    m.add_function(wrap_pyfunction!(list_dot_product, m)?)?;
     Ok(())
 }
