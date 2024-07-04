@@ -1,6 +1,6 @@
 use pyo3::prelude::*;
 use pyo3::types::{PyList, PyFloat};
-use pyo3::exceptions::PyTypeError;
+use pyo3::exceptions::PyValueError;
 
 /// Formats the sum of two numbers as string.
 #[pyfunction]
@@ -63,7 +63,7 @@ fn list_dot_product(a: &PyList, b: &PyList) -> PyResult<f64> {
     let a_len = a.len();
     let b_len = b.len();
     if a_len != b_len {
-        return Err(PyTypeError::new_err("lists must be same length"))
+        return Err(PyValueError::new_err("lists must be same length"))
     }
 
     for index in 0..a_len {

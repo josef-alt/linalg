@@ -31,7 +31,7 @@ class TestLinAlg(unittest.TestCase):
 
     # list_dot_product(list1, list2)
     def test_list_dot_product_invalid(self):
-        self.assertRaises(TypeError, lambda: linalg.list_dot_product([], [1, 2, 3]))
+        self.assertRaises(ValueError, lambda: linalg.list_dot_product([], [1, 2, 3]))
     def test_list_dot_product_empty(self):
         self.assertEqual(linalg.list_dot_product([], []), 0)
     def test_list_dot_product_zero(self):
