@@ -38,7 +38,7 @@ fn list_to_string<'py>(input: Bound<'py, PyList>) -> PyResult<String> {
 
 /// apply scalar to vector
 #[pyfunction]
-fn scale_list(vector: &PyList, scale: f64) -> PyResult<()> {
+fn scale_list<'py>(vector: Bound<'py, PyList>, scale: f64) -> PyResult<()> {
     for index in 0..vector.len() {
         let item = vector.get_item(index);
         let element = match item {
@@ -48,7 +48,7 @@ fn scale_list(vector: &PyList, scale: f64) -> PyResult<()> {
 
         let value = element.extract::<f64>()?;
 
-        vector.set_item(index, PyFloat::new(vector.py(), value * scale))?;
+        vector.set_item(index, PyFloat::new_bound(vector.py(), value * scale))?;
     }
 
     Ok(())
