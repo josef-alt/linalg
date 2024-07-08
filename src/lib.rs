@@ -56,7 +56,7 @@ fn scale_list<'py>(vector: Bound<'py, PyList>, scale: f64) -> PyResult<()> {
 
 /// compute dot product of lists
 #[pyfunction]
-fn list_dot_product(a: &PyList, b: &PyList) -> PyResult<f64> {
+fn list_dot_product<'py>(a: Bound<'py, PyList>, b: Bound<'py, PyList>) -> PyResult<f64> {
     let mut sum: f64 = 0.0;
 
     let a_len = a.len();
