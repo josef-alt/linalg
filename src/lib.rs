@@ -9,9 +9,8 @@ fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
 }
 
 /// Converts python list to a comma separate string
-/// TODO PyList deprecated
 #[pyfunction]
-fn list_to_string(input: &PyList) -> PyResult<String> {
+fn list_to_string<'py>(input: Bound<'py, PyList>) -> PyResult<String> {
     let mut total: String = "".to_owned();
 
     for element in input.iter() {
