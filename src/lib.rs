@@ -84,11 +84,11 @@ fn list_dot_product<'py>(a: Bound<'py, PyList>, b: Bound<'py, PyList>) -> PyResu
 /// determinant
 /// TODO dimensions check
 /// TODO generics + type constraint
+/// TODO allow for larger matrices
 #[pyfunction]
 fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
     let mut det: f64 = 0.0;
     let n = matrix.len();
-
     if n == 1 {
         det = matrix[0][0];
         return Ok(det);
