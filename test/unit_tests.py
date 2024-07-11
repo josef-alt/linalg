@@ -1,7 +1,7 @@
 import unittest
 import linalg
 
-class TestLinAlg(unittest.TestCase):
+class TestVectorModule(unittest.TestCase):
     # add(list1, list2)
     def test_vector_addition_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.add([], [1, 2, 3]))
@@ -32,6 +32,7 @@ class TestLinAlg(unittest.TestCase):
     def test_list_dot_product_neg(self):
         self.assertEqual(linalg.list_dot_product([1, 2, 3], [-4, -5, -6]), -32)
 
+class TestMatrixModule(unittest.TestCase):
     # determinant(matrix)
     def test_determinant(self):
         self.assertEqual(linalg.determinant([[3.14]]), 3.14)
@@ -62,9 +63,6 @@ class TestLinAlg(unittest.TestCase):
     def test_determinant_triangular(self):
         self.assertEqual(linalg.determinant([[3, 1, 1], [0, 2, 5], [0, 0, 4]]), 24)
         self.assertEqual(linalg.determinant([[4, 0, 0], [5, 2, 0], [1, 1, 3]]), 24)
-        
-        
-
 
 if __name__ == '__main__':
     unittest.main()
