@@ -1,7 +1,13 @@
 use pyo3::prelude::*;
 use pyo3::types::{PyList, PyFloat};
 use pyo3::exceptions::PyValueError;
+
+use vector::vector::add;
 use matrix::matrix::determinant;
+
+mod vector {
+    pub mod vector;
+}
 
 mod matrix {
 	pub mod matrix;
@@ -93,7 +99,10 @@ fn linalg(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(list_to_string, m)?)?;
     m.add_function(wrap_pyfunction!(scale_list, m)?)?;
     m.add_function(wrap_pyfunction!(list_dot_product, m)?)?;
-	
+
+    // vector
+    m.add_function(wrap_pyfunction!(add, m)?)?;
+
 	// matrix
     m.add_function(wrap_pyfunction!(determinant, m)?)?;
     Ok(())
