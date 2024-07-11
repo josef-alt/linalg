@@ -2,6 +2,24 @@ import unittest
 import linalg
 
 class TestLinAlg(unittest.TestCase):
+    # add(list1, list2)
+    def test_vector_addition_invalid(self):
+        self.assertRaises(ValueError, lambda: linalg.add([], [1, 2, 3]))
+        self.assertRaises(ValueError, lambda: linalg.add([1, 2, 3], []))
+    def test_vector_addition(self):
+        self.assertEqual(linalg.add([], []), [])        
+        self.assertEqual(linalg.add([1], [1]), [2])
+        self.assertEqual(linalg.add([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]), [6, 6, 6, 6, 6])
+    
+    # sub(list1, list2)
+    def test_vector_subtraction_invalid(self):
+        self.assertRaises(ValueError, lambda: linalg.sub([], [1, 2, 3]))
+        self.assertRaises(ValueError, lambda: linalg.sub([1, 2, 3], []))
+    def test_vector_subtraction(self):
+        self.assertEqual(linalg.sub([], []), [])        
+        self.assertEqual(linalg.sub([1], [1]), [0])
+        self.assertEqual(linalg.sub([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]), [-4, -2, 0, 2, 4])
+        
     # list_dot_product(list1, list2)
     def test_list_dot_product_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.list_dot_product([], [1, 2, 3]))
