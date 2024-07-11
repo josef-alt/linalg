@@ -2,20 +2,20 @@ import unittest
 import linalg
 
 class TestVectorModule(unittest.TestCase):
-    # add(list1, list2)
-    def test_vector_addition_invalid(self):
+    # add(vector1, vector2)
+    def test_addition_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.add([], [1, 2, 3]))
         self.assertRaises(ValueError, lambda: linalg.add([1, 2, 3], []))
-    def test_vector_addition(self):
+    def test_addition(self):
         self.assertEqual(linalg.add([], []), [])        
         self.assertEqual(linalg.add([1], [1]), [2])
         self.assertEqual(linalg.add([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]), [6, 6, 6, 6, 6])
     
-    # sub(list1, list2)
-    def test_vector_subtraction_invalid(self):
+    # sub(vector1, vector2)
+    def test_subtraction_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.sub([], [1, 2, 3]))
         self.assertRaises(ValueError, lambda: linalg.sub([1, 2, 3], []))
-    def test_vector_subtraction(self):
+    def test_subtraction(self):
         self.assertEqual(linalg.sub([], []), [])        
         self.assertEqual(linalg.sub([1], [1]), [0])
         self.assertEqual(linalg.sub([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]), [-4, -2, 0, 2, 4])
