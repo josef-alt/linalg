@@ -20,17 +20,15 @@ class TestVectorModule(unittest.TestCase):
         self.assertEqual(linalg.sub([1], [1]), [0])
         self.assertEqual(linalg.sub([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]), [-4, -2, 0, 2, 4])
         
-    # list_dot_product(list1, list2)
-    def test_list_dot_product_invalid(self):
-        self.assertRaises(ValueError, lambda: linalg.list_dot_product([], [1, 2, 3]))
-    def test_list_dot_product_empty(self):
-        self.assertEqual(linalg.list_dot_product([], []), 0)
-    def test_list_dot_product_zero(self):
-        self.assertEqual(linalg.list_dot_product([1, 0, 3], [0, 2, 0]), 0)
-    def test_list_dot_product_pos(self):
-        self.assertEqual(linalg.list_dot_product([1, 2, 3], [4, 5, 6]), 32)
-    def test_list_dot_product_neg(self):
-        self.assertEqual(linalg.list_dot_product([1, 2, 3], [-4, -5, -6]), -32)
+    # dot_product(vector1, vector2)
+    def test_dot_product_invalid(self):
+        self.assertRaises(ValueError, lambda: linalg.dot_product([], [1, 2, 3]))
+        self.assertRaises(ValueError, lambda: linalg.dot_product([1, 2, 3], []))
+    def test_dot_product(self):
+        self.assertEqual(linalg.dot_product([], []), 0)
+        self.assertEqual(linalg.dot_product([1, 0, 3], [0, 2, 0]), 0)
+        self.assertEqual(linalg.dot_product([1, 2, 3], [4, 5, 6]), 32)
+        self.assertEqual(linalg.dot_product([1, 2, 3], [-4, -5, -6]), -32)
 
 class TestMatrixModule(unittest.TestCase):
     # determinant(matrix)
