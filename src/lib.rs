@@ -2,7 +2,7 @@ use pyo3::prelude::*;
 use pyo3::types::{PyList, PyFloat};
 
 use vector::vector::{add, sub, dot_product};
-use matrix::matrix::determinant;
+use matrix::matrix::{determinant, _extract};
 
 mod vector {
     pub mod vector;
@@ -78,5 +78,7 @@ fn linalg(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
 	// matrix
     m.add_function(wrap_pyfunction!(determinant, m)?)?;
+    m.add_function(wrap_pyfunction!(_extract, m)?)?;
+
     Ok(())
 }
