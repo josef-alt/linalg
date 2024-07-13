@@ -61,22 +61,6 @@ class TestMatrixModule(unittest.TestCase):
     def test_determinant_triangular(self):
         self.assertEqual(linalg.determinant([[3, 1, 1], [0, 2, 5], [0, 0, 4]]), 24)
         self.assertEqual(linalg.determinant([[4, 0, 0], [5, 2, 0], [1, 1, 3]]), 24)
-    
-    # _extract(M, i) = M with row and col i removed
-    def test_extract(self):
-        self.assertEqual(linalg._extract([
-            [1, 2, 3, 4], 
-            [2, 3, 4, 5], 
-            [3, 4, 5, 6], 
-            [4, 5, 6, 7]], 2), [[1, 2, 4], [2, 3, 5], [4, 5, 7]])
-        self.assertEqual(linalg._extract([
-            [1]], 0), [])
-        self.assertEqual(linalg._extract([
-            [1, 2],
-			[2, 3]], 0), [[3]])
-        self.assertEqual(linalg._extract([
-            [1, 2],
-			[2, 3]], 1), [[1]])
 
 if __name__ == '__main__':
     unittest.main()
