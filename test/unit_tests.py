@@ -7,19 +7,19 @@ class TestVectorModule(unittest.TestCase):
         self.assertRaises(ValueError, lambda: linalg.add([], [1, 2, 3]))
         self.assertRaises(ValueError, lambda: linalg.add([1, 2, 3], []))
     def test_addition(self):
-        self.assertEqual(linalg.add([], []), [])        
+        self.assertEqual(linalg.add([], []), [])
         self.assertEqual(linalg.add([1], [1]), [2])
         self.assertEqual(linalg.add([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]), [6, 6, 6, 6, 6])
-    
+
     # sub(vector1, vector2)
     def test_subtraction_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.sub([], [1, 2, 3]))
         self.assertRaises(ValueError, lambda: linalg.sub([1, 2, 3], []))
     def test_subtraction(self):
-        self.assertEqual(linalg.sub([], []), [])        
+        self.assertEqual(linalg.sub([], []), [])
         self.assertEqual(linalg.sub([1], [1]), [0])
         self.assertEqual(linalg.sub([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]), [-4, -2, 0, 2, 4])
-        
+
     # dot_product(vector1, vector2)
     def test_dot_product_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.dot_product([], [1, 2, 3]))
@@ -29,14 +29,14 @@ class TestVectorModule(unittest.TestCase):
         self.assertEqual(linalg.dot_product([1, 0, 3], [0, 2, 0]), 0)
         self.assertEqual(linalg.dot_product([1, 2, 3], [4, 5, 6]), 32)
         self.assertEqual(linalg.dot_product([1, 2, 3], [-4, -5, -6]), -32)
-    
+
     # scale(vector, scalar)
     def test_scale(self):
         self.assertEqual(linalg.scale([], 1), [])
         self.assertEqual(linalg.scale([1], 10), [10])
         self.assertEqual(linalg.scale([1, 2, 3], 0), [0, 0, 0])
         self.assertEqual(linalg.scale([1, 2, 3, 4, 5, 6], 25), [25, 50, 75, 100, 125, 150])
-        
+
     # magnitude(vector)
     def test_magnitude(self):
         self.assertEqual(linalg.magnitude([]), 0)
