@@ -9,7 +9,7 @@ mod vector {
 }
 
 mod matrix {
-	pub mod matrix;
+    pub mod matrix;
 }
 
 /// Formats the sum of two numbers as string.
@@ -76,10 +76,10 @@ fn linalg(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(sub, m)?)?;
     m.add_function(wrap_pyfunction!(dot_product, m)?)?;
     m.add_function(wrap_pyfunction!(scale, m)?)?;
-	m.add_function(wrap_pyfunction!(magnitude, m)?)?;
+    m.add_function(wrap_pyfunction!(magnitude, m)?)?;
     m.add_function(wrap_pyfunction!(normalize, m)?)?;
 
-	// matrix
+    // matrix
     m.add_function(wrap_pyfunction!(determinant, m)?)?;
 
     Ok(())

@@ -12,18 +12,18 @@ pub fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
     if n == 2 {
         return Ok(matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0])
     }
-	
-	let mut det: f64 = 0.0;	
-	for i in 0..n {
-		let mut minor: f64 = determinant(_extract(matrix.clone(), 0, i))?;
-		if i % 2 == 1 {
-			minor = -minor;
-		}
-		
-		det += matrix[0][i] * minor;
-	}
-	
-	Ok(det)
+    
+    let mut det: f64 = 0.0; 
+    for i in 0..n {
+        let mut minor: f64 = determinant(_extract(matrix.clone(), 0, i))?;
+        if i % 2 == 1 {
+            minor = -minor;
+        }
+        
+        det += matrix[0][i] * minor;
+    }
+    
+    Ok(det)
 }
 
 /// principal submatrix obtained by dropping row/col specified
