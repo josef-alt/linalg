@@ -36,14 +36,14 @@ class TestMatrixModule(unittest.TestCase):
         self.assertEqual(linalg.determinant([[3.14]]), 3.14)
         self.assertEqual(linalg.determinant([[8, 6], [3, 4]]), 14)
         self.assertEqual(linalg.determinant([[3, 1, 1], [4, -2, 5], [2, 8, 7]]), -144)
-        self.assertEqual(linalg.determinant([
+        self.assertAlmostEqual(linalg.determinant([
             [9.8656, 10.0306, 0.3472, 11.0069, 7.3139, 4.4606, 4.2002],
             [2.0655, 14.5462, 0.9602, 13.7961, 2.8015, 9.0956, 5.0173],
             [5.2817, 14.3850, 9.1309, 10.1272, 5.2193, 2.4805, 2.9069],
             [6.0149, 14.8712, 7.1108, 3.9310, 10.5918, 0.5560, 11.3649],
             [4.4826, 7.7488, 12.8341, 9.5523, 6.5164, 9.0212, 9.4849],
             [6.6361, 12.5463, 2.7712, 1.9945, 7.0052, 7.3419, 12.4871],
-            [4.0405, 3.5168, 1.0304, 9.5555, 2.0069, 12.1179, 1.0339]]), 3.7106e6)
+            [4.0405, 3.5168, 1.0304, 9.5555, 2.0069, 12.1179, 1.0339]]), 3710595.29, places=2)
     # det(I) = 1
     def test_determinant_identity(self):
         self.assertEqual(linalg.determinant([[1]]), 1)
