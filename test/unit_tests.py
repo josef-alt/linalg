@@ -29,6 +29,31 @@ class TestVectorModule(unittest.TestCase):
         self.assertEqual(linalg.dot_product([1, 0, 3], [0, 2, 0]), 0)
         self.assertEqual(linalg.dot_product([1, 2, 3], [4, 5, 6]), 32)
         self.assertEqual(linalg.dot_product([1, 2, 3], [-4, -5, -6]), -32)
+    
+    # scale(vector, scalar)
+    def test_scale(self):
+        self.assertEqual(linalg.scale([], 1), [])
+        self.assertEqual(linalg.scale([1], 10), [10])
+        self.assertEqual(linalg.scale([1, 2, 3], 0), [0, 0, 0])
+        self.assertEqual(linalg.scale([1, 2, 3, 4, 5, 6], 25), [25, 50, 75, 100, 125, 150])
+        
+    # magnitude(vector)
+    def test_magnitude(self):
+        self.assertEqual(linalg.magnitude([]), 0)
+        self.assertEqual(linalg.magnitude([1]), 1)
+        self.assertAlmostEqual(linalg.magnitude([1, 2, 3]), 3.74166, places=2)
+        self.assertAlmostEqual(linalg.magnitude([1, 4, 9, 16]), 18.81, places=2)
+        self.assertAlmostEqual(linalg.magnitude([2, 2, 88, 25, 71, 57, 16, 90, 89, 57]), 190.245, places=2)
+        self.assertAlmostEqual(linalg.magnitude([993, 458, 883, 887, 29, 212, 677, 99, 264, 287, 923, 102, 170, 438, 780, 897, 317, 646, 525, 207, 14, 224, 897, 447, 659, 209, 577, 27, 31, 552, 385, 870, 766, 134, 351, 323, 750, 817, 480, 815, 178, 450, 620, 876, 398, 347, 102, 353, 115, 801, 40, 572, 552, 202, 658, 432, 461, 553, 64, 387, 987, 645, 992, 171, 550, 84, 136, 817, 194, 956, 490, 817, 288, 201, 470, 503, 31, 179, 614, 122, 79, 16, 551, 749, 571, 998, 64, 876, 104, 478, 461, 577, 93, 838, 997, 91, 201, 700, 333, 190]), 5443.86, places=2)
+
+    # normalize(vector)
+    def test_normalize(self):
+        input = [1, 2, 3]
+        output = linalg.normalize(input)
+        expected = [0.267, 0.534, 0.802]
+        for i in range(len(input)):
+            self.assertAlmostEqual(output[i], expected[i], places=2)
+
 
 class TestMatrixModule(unittest.TestCase):
     # determinant(matrix)
