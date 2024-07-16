@@ -1,21 +1,29 @@
 use pyo3::prelude::{pyfunction, PyResult};
+use pyo3::exceptions::PyValueError;
 
 /// determinant
-/// TODO dimensions check
 /// TODO generics + type constraint
 #[pyfunction]
 pub fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
+    if _is_square(&matrix) {
+        return Ok(_det(matrix))
+    }
+    Err(PyValueError::new_err("matrix must be square"))
+}
+
+/// helper function for computing determinant of a square matrix
+fn _det<'py>(matrix: Vec<Vec<f64>>) -> f64 {
     let n = matrix.len();
     if n == 1 {
-        return Ok(matrix[0][0])
+        return matrix[0][0]
     }
     if n == 2 {
-        return Ok(matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0])
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
     }
 
     let mut det: f64 = 0.0;
     for i in 0..n {
-        let mut minor: f64 = determinant(_extract(matrix.clone(), 0, i))?;
+        let mut minor: f64 = _det(_extract(matrix.clone(), 0, i));
         if i % 2 == 1 {
             minor = -minor;
         }
@@ -23,7 +31,7 @@ pub fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
         det += matrix[0][i] * minor;
     }
 
-    Ok(det)
+    return det
 }
 
 /// submatrix obtained by dropping row/col specified
