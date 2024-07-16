@@ -50,7 +50,7 @@ fn _extract(matrix: Vec<Vec<f64>>, row: usize, col: usize) -> Vec<Vec<f64>> {
 /// determine if matrix is square
 /// many unary operations only work on square matrices
 /// this will probably be used internally only
-fn _is_square(matrix: Vec<Vec<f64>>) -> bool {
+fn _is_square(matrix: &Vec<Vec<f64>>) -> bool {
     let size: usize = matrix.len();
 
     for row in 0..size {
