@@ -46,3 +46,35 @@ fn _extract(matrix: Vec<Vec<f64>>, row: usize, col: usize) -> Vec<Vec<f64>> {
 
     return result
 }
+
+/// determine if matrix is square
+/// many unary operations only work on square matrices
+/// this will probably be used internally only
+fn _is_square(matrix: Vec<Vec<f64>>) -> bool {
+    let size: usize = matrix.len();
+
+    for row in 0..size {
+        if matrix[row].len() != size {
+            return false
+        }
+    }
+
+    return true
+}
+
+/// determine if two matrices are same size
+/// most binary operations require the same dimensions
+fn _same_size(matrix_a: Vec<Vec<f64>>, matrix_b: Vec<Vec<f64>>) -> bool {
+    let row_count: usize = matrix_a.len();
+    if matrix_b.len() != row_count {
+        return false
+    }
+    
+    for row in 0..row_count {
+        if matrix_a[row].len() != matrix_b[row].len() {
+            return false
+        }
+    }
+
+    return true
+}
