@@ -26,7 +26,7 @@ pub fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
     Ok(det)
 }
 
-/// principal submatrix obtained by dropping row/col specified
+/// submatrix obtained by dropping row/col specified
 fn _extract(matrix: Vec<Vec<f64>>, row: usize, col: usize) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
 
