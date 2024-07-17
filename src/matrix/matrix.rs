@@ -42,12 +42,14 @@ fn _det<'py>(matrix: Vec<Vec<f64>>) -> f64 {
 
     let mut det: f64 = 0.0;
     for i in 0..n {
-        let mut minor: f64 = _det(_extract(matrix.clone(), 0, i));
-        if i % 2 == 1 {
-            minor = -minor;
-        }
+        if matrix[0][i] != 0.0 {
+            let mut minor: f64 = _det(_extract(matrix.clone(), 0, i));
+            if i % 2 == 1 {
+                minor = -minor;
+            }
 
-        det += matrix[0][i] * minor;
+            det += matrix[0][i] * minor;
+        }
     }
 
     return det
