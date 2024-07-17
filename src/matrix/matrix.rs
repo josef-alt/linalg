@@ -1,6 +1,25 @@
 use pyo3::prelude::{pyfunction, PyResult};
 use pyo3::exceptions::PyValueError;
 
+/// generate identity matrices
+#[pyfunction]
+pub fn identity<'py>(size: usize) -> PyResult<Vec<Vec<i16>>> {
+    let mut result: Vec<Vec<i16>> = Vec::new();
+
+    for r in 0..size {
+        result.push(Vec::new());
+        for c in 0..size {
+            if r == c {
+                result[r].push(1);
+            } else {
+                result[r].push(0);
+            }
+        }
+    }
+
+    Ok(result)
+}
+
 /// determinant
 /// TODO generics + type constraint
 #[pyfunction]

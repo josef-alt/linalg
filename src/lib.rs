@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 
 use vector::vector::{add, sub, dot_product, scale, magnitude, normalize};
-use matrix::matrix::{determinant};
+use matrix::matrix::{determinant, identity};
 
 mod vector {
     pub mod vector;
@@ -25,6 +25,7 @@ fn linalg(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
     // matrix
     m.add_function(wrap_pyfunction!(determinant, m)?)?;
+    m.add_function(wrap_pyfunction!(identity, m)?)?;
 
     Ok(())
 }
