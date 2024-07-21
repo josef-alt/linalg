@@ -59,6 +59,20 @@ class TestVectorModule(unittest.TestCase):
         expected = [0.267, 0.534, 0.802]
         self.assertVectorAlmostEqual(output, expected)
 
+    # project(u, v)
+    def test_project_1(self):
+        u = [5, -12]
+        v = [3, 4]
+        expected = [-165/169, 396/169]
+        output = linalg.project(u, v)
+        self.assertVectorAlmostEqual(output, expected)
+    def test_project_2(self):
+        u = [5, 4, 2]
+        v = [1, 2, 1]
+        expected = [5/3, 4/3, 2/3]
+        output = linalg.project(u, v)
+        self.assertVectorAlmostEqual(output, expected)
+
 
 class TestMatrixModule(unittest.TestCase):
     # determinant(matrix)
