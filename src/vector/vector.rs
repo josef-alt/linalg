@@ -52,7 +52,7 @@ pub fn dot_product<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<f64> {
 
 /// magnitude
 #[pyfunction]
-pub fn magnitude<'py>(vector: Vec<f64>) -> PyResult<f64> {
+pub fn magnitude<'py>(vector: Vec<f64>) -> f64 {
     let mut mag: f64 = 0.0;
 
     for ele in vector.iter() {
@@ -60,7 +60,7 @@ pub fn magnitude<'py>(vector: Vec<f64>) -> PyResult<f64> {
     }
     mag = f64::sqrt(mag);
 
-    Ok(mag)
+    return mag
 }
 
 // corss product
@@ -68,7 +68,7 @@ pub fn magnitude<'py>(vector: Vec<f64>) -> PyResult<f64> {
 /// project vector v onto u
 #[pyfunction]
 pub fn project<'py>(u: Vec<f64>, v: Vec<f64>) -> PyResult<Vec<f64>> {
-    let mag_u: f64 = magnitude(u.clone())?;
+    let mag_u: f64 = magnitude(u.clone());
     let dot_prod: f64 = dot_product(u.clone(), v)?;
     let scalar: f64 = dot_prod / (mag_u * mag_u);
 
@@ -78,7 +78,7 @@ pub fn project<'py>(u: Vec<f64>, v: Vec<f64>) -> PyResult<Vec<f64>> {
 /// normalization
 #[pyfunction]
 pub fn normalize<'py>(vector: Vec<f64>) -> PyResult<Vec<f64>> {
-    let norm: f64 = magnitude(vector.clone())?;
+    let norm: f64 = magnitude(vector.clone());
     Ok(vector.iter().map(|ele| ele / norm).collect())
 }
 
