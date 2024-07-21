@@ -2,6 +2,12 @@ import unittest
 import linalg
 
 class TestVectorModule(unittest.TestCase):
+    # helper functions
+    def assertVectorAlmostEqual(self, vector1, vector2, places=2):
+        self.assertEqual(len(vector1), len(vector2))
+        for i in range(len(vector1)):
+            self.assertAlmostEqual(vector1[i], vector2[i], places=places)
+
     # add(vector1, vector2)
     def test_addition_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.add([], [1, 2, 3]))
@@ -51,8 +57,7 @@ class TestVectorModule(unittest.TestCase):
         input = [1, 2, 3]
         output = linalg.normalize(input)
         expected = [0.267, 0.534, 0.802]
-        for i in range(len(input)):
-            self.assertAlmostEqual(output[i], expected[i], places=2)
+        self.assertVectorAlmostEqual(output, expected)
 
 
 class TestMatrixModule(unittest.TestCase):
