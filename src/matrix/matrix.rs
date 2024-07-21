@@ -25,13 +25,13 @@ pub fn identity<'py>(size: usize) -> PyResult<Vec<Vec<i16>>> {
 #[pyfunction]
 pub fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
     if _is_square(&matrix) {
-        return Ok(_det(matrix))
+        return Ok(_det(&matrix))
     }
     Err(PyValueError::new_err("matrix must be square"))
 }
 
 /// helper function for computing determinant of a square matrix
-fn _det<'py>(matrix: Vec<Vec<f64>>) -> f64 {
+fn _det<'py>(matrix: &Vec<Vec<f64>>) -> f64 {
     let n = matrix.len();
     if n == 1 {
         return matrix[0][0]
@@ -43,7 +43,7 @@ fn _det<'py>(matrix: Vec<Vec<f64>>) -> f64 {
     let mut det: f64 = 0.0;
     for i in 0..n {
         if matrix[0][i] != 0.0 {
-            let mut minor: f64 = _det(_extract(matrix.clone(), 0, i));
+            let mut minor: f64 = _det(&_extract(&matrix, 0, i));
             if i % 2 == 1 {
                 minor = -minor;
             }
@@ -56,7 +56,7 @@ fn _det<'py>(matrix: Vec<Vec<f64>>) -> f64 {
 }
 
 /// submatrix obtained by dropping row/col specified
-fn _extract(matrix: Vec<Vec<f64>>, row: usize, col: usize) -> Vec<Vec<f64>> {
+fn _extract(matrix: &Vec<Vec<f64>>, row: usize, col: usize) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
 
     for r in 0..matrix.len() {
@@ -93,7 +93,7 @@ fn _is_square(matrix: &Vec<Vec<f64>>) -> bool {
 
 /// determine if two matrices are same size
 /// most binary operations require the same dimensions
-fn _same_size(matrix_a: Vec<Vec<f64>>, matrix_b: Vec<Vec<f64>>) -> bool {
+fn _same_size(matrix_a: &Vec<Vec<f64>>, matrix_b: &Vec<Vec<f64>>) -> bool {
     let row_count: usize = matrix_a.len();
     if matrix_b.len() != row_count {
         return false
