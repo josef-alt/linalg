@@ -64,7 +64,16 @@ pub fn magnitude<'py>(vector: Vec<f64>) -> PyResult<f64> {
 }
 
 // corss product
-// projection
+
+/// project vector v onto u
+#[pyfunction]
+pub fn project<'py>(u: Vec<f64>, v: Vec<f64>) -> PyResult<Vec<f64>> {
+    let mag_u: f64 = magnitude(u.clone())?;
+    let dot_prod: f64 = dot_product(u.clone(), v)?;
+    let scalar: f64 = dot_prod / (mag_u * mag_u);
+
+    Ok(scale(u, scalar)?)
+}
 
 /// normalization
 #[pyfunction]
