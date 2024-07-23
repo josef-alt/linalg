@@ -88,21 +88,23 @@ class TestMatrixModule(unittest.TestCase):
             [4.4826, 7.7488, 12.8341, 9.5523, 6.5164, 9.0212, 9.4849],
             [6.6361, 12.5463, 2.7712, 1.9945, 7.0052, 7.3419, 12.4871],
             [4.0405, 3.5168, 1.0304, 9.5555, 2.0069, 12.1179, 1.0339]]), 3710595.29, places=2)
-    # det(I) = 1
     def test_determinant_identity(self):
+        # det(I) = 1
         self.assertEqual(linalg.determinant([[1]]), 1)
         self.assertEqual(linalg.determinant([[1, 0], [0, 1]]), 1)
         self.assertEqual(linalg.determinant([[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 1)
-
-    # det with zero row/col = 0
-    def test_determinant_2_zero_row(self):
+    def test_determinant_zero(self):
+        # det with zero row/col = 0
         self.assertEqual(linalg.determinant([[2, 2], [0, 0]]), 0)
-        self.assertEqual(linalg.determinant([[2, 2, 2, 2, 2], [0, 0, 0, 0, 0], [2, 2, 2, 2, 2], [2, 2, 2, 2, 2], [2, 2, 2, 2, 2]]), 0)
-    def test_determinant_2_zero_col(self):
+        self.assertEqual(linalg.determinant([
+            [2, 2, 2, 2, 2],
+            [0, 0, 0, 0, 0],
+            [2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2]]), 0)
         self.assertEqual(linalg.determinant([[2, 0], [2, 0]]), 0)
-
-    # det(L) = det(U) = diagonal product
     def test_determinant_triangular(self):
+        # det(L) = det(U) = diagonal product
         self.assertEqual(linalg.determinant([[3, 1, 1], [0, 2, 5], [0, 0, 4]]), 24)
         self.assertEqual(linalg.determinant([[4, 0, 0], [5, 2, 0], [1, 1, 3]]), 24)
 
