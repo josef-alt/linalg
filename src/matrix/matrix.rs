@@ -107,3 +107,55 @@ fn _same_size(matrix_a: &Vec<Vec<f64>>, matrix_b: &Vec<Vec<f64>>) -> bool {
 
     return true
 }
+
+/// determine whether or not a matrix is invertible
+#[pyfunction]
+pub fn is_invertible<'py>(matrix: Vec<Vec<f64>>) -> bool {
+    if !_is_square(&matrix) {
+        return false
+    }
+    return _det(&matrix) != 0.0
+}
+
+/// invert matrix or return value error
+#[pyfunction]
+pub fn invert<'py>(matrix: Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
+    if !is_invertible(matrix.clone()) {
+        return Err(PyValueError::new_err("matrix is not invertible"))
+    }
+    
+    let n: usize = matrix.len();
+
+    // compute cofactor matrix
+    let mut cofactors: Vec<Vec<f64>> = Vec::new();
+    for row in 0..n {
+        cofactors.push(Vec::new());
+        for col in 0..n {
+            let minor: f64 = _det(&_extract(&matrix, row, col));
+            let sign: f64 = if row % 2 == col % 2 { 1.0 } else { -1.0 };
+
+            cofactors[row].push(sign * minor);
+        }
+    }
+    
+    // transpose cofactors
+    let mut adjugate: Vec<Vec<f64>> = Vec::new();
+    for row in 0..n {
+        adjugate.push(Vec::new());
+        for col in 0..n {
+            adjugate[row].push(cofactors[col][row]);
+        }
+    }
+
+    // compute determinant
+    let det: f64 = _det(&matrix);
+
+    // multiply adjudicate by 1/det
+    for row in 0..n {
+        for col in 0..n {
+            adjugate[row][col] *= 1.0 / det;
+        }
+    }
+
+    Ok(adjugate)
+}
