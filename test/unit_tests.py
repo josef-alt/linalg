@@ -127,6 +127,13 @@ class TestMatrixModule(unittest.TestCase):
             [[3, 0, 2], [2, 0, -2], [0, 1, 1]]),
             [[0.2, 0.2, 0.0], [-0.2, 0.3, 1.0], [0.2, -0.3, 0.0]])
 
+        # B = inv(A)
+        # A = inv(B)
+        A = [[1, 5], [-2, -9]]
+        B = linalg.invert(A)
+        self.assertMatrixAlmostEqual(B, [[-9, -5], [2, 1]])
+        self.assertMatrixAlmostEqual(linalg.invert(B), A)
+
 
 if __name__ == '__main__':
     unittest.main()
