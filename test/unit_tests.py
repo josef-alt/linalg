@@ -75,6 +75,13 @@ class TestVectorModule(unittest.TestCase):
 
 
 class TestMatrixModule(unittest.TestCase):
+    # helper function for comparing matrices
+    def assertMatrixAlmostEqual(self, m1, m2, places=2):
+        assert len(m1) == len(m2)
+        for row in range(len(m1)):
+            for col in range(len(m1[row])):
+                self.assertAlmostEqual(m1[row][col], m2[row][col], places=places)
+
     # determinant(matrix)
     def test_determinant_invalid(self):
         self.assertRaises(ValueError, lambda: linalg.determinant([[1, 2, 3]]))
