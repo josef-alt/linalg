@@ -120,15 +120,16 @@ pub fn is_invertible<'py>(matrix: Vec<Vec<f64>>) -> bool {
 /// invert matrix or return value error
 #[pyfunction]
 pub fn invert<'py>(matrix: Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
-    if !_is_square(&matrix) {
-        return Err(PyValueError::new_err("matrix is not invertible"))
-    }
-
     let n: usize = matrix.len();
 
     // compute cofactor matrix
     let mut cofactors: Vec<Vec<f64>> = Vec::new();
     for row in 0..n {
+        // make sure matrix is square
+        if matrix[row].len() != n {
+            return Err(PyValueError::new_err("matrix is not invertible"))
+        }
+
         cofactors.push(Vec::new());
         for col in 0..n {
             let minor: f64 = _det(&_extract(&matrix, row, col));
