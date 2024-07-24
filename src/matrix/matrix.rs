@@ -162,13 +162,7 @@ pub fn invert<'py>(matrix: Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
     }
     
     // transpose cofactors
-    let mut adjugate: Vec<Vec<f64>> = Vec::new();
-    for row in 0..n {
-        adjugate.push(Vec::new());
-        for col in 0..n {
-            adjugate[row].push(cofactors[col][row]);
-        }
-    }
+    let mut adjugate: Vec<Vec<f64>> = _transpose(&cofactors);
 
     // compute determinant without recomputing minors
     let mut det: f64 = 0.0;
