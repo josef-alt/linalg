@@ -147,8 +147,11 @@ pub fn invert<'py>(matrix: Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
         }
     }
 
-    // compute determinant
-    let det: f64 = _det(&matrix);
+    // compute determinant without recomputing minors
+    let mut det: f64 = 0.0;
+    for col in 0..n {
+        det += matrix[0][col] * cofactors[0][col];
+    }
 
     // multiply adjudicate by 1/det
     for row in 0..n {
