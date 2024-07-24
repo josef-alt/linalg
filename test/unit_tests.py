@@ -76,6 +76,9 @@ class TestVectorModule(unittest.TestCase):
 
 class TestMatrixModule(unittest.TestCase):
     # determinant(matrix)
+    def test_determinant_invalid(self):
+        self.assertRaises(ValueError, lambda: linalg.determinant([[1, 2, 3]]))
+        self.assertRaises(ValueError, lambda: linalg.determinant([[1], [2]]))
     def test_determinant(self):
         self.assertEqual(linalg.determinant([[3.14]]), 3.14)
         self.assertEqual(linalg.determinant([[8, 6], [3, 4]]), 14)
