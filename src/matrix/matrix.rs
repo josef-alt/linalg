@@ -117,6 +117,28 @@ pub fn is_invertible<'py>(matrix: Vec<Vec<f64>>) -> bool {
     return _det(&matrix) != 0.0
 }
 
+/// transpose matrix
+#[pyfunction]
+pub fn transpose<'py>(matrix: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+    _transpose(&matrix)    
+}
+
+/// extracted transposition logic to allow internal use without copying matrices
+pub fn _transpose(matrix: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+    let mut result: Vec<Vec<f64>> = Vec::new();
+
+    for r in 0..matrix.len() {
+        for c in 0..matrix[r].len() {
+            if c >= result.len() {
+                result.push(Vec::new());
+            }
+            result[c].push(matrix[r][c]);
+        }
+    }
+
+    return result
+}
+
 /// invert matrix or return value error
 #[pyfunction]
 pub fn invert<'py>(matrix: Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
