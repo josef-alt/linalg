@@ -118,5 +118,15 @@ class TestMatrixModule(unittest.TestCase):
         self.assertEqual(linalg.determinant([[3, 1, 1], [0, 2, 5], [0, 0, 4]]), 24)
         self.assertEqual(linalg.determinant([[4, 0, 0], [5, 2, 0], [1, 1, 3]]), 24)
 
+    # invert(matrix)
+    def test_invert_invalid(self):
+        self.assertRaises(ValueError, lambda: linalg.invert([[2, 4], [2, 4]]))
+        self.assertRaises(ValueError, lambda: linalg.invert([[-1, 3/2], [2/3, -1]]))
+    def test_invert(self):
+        self.assertMatrixAlmostEqual(linalg.invert(
+            [[3, 0, 2], [2, 0, -2], [0, 1, 1]]),
+            [[0.2, 0.2, 0.0], [-0.2, 0.3, 1.0], [0.2, -0.3, 0.0]])
+
+
 if __name__ == '__main__':
     unittest.main()
