@@ -134,6 +134,17 @@ class TestMatrixModule(unittest.TestCase):
         self.assertMatrixAlmostEqual(B, [[-9, -5], [2, 1]])
         self.assertMatrixAlmostEqual(linalg.invert(B), A)
 
+    # transpose(matrix)
+    def test_transpose(self):
+        self.assertMatrixAlmostEqual(
+            linalg.transpose([[1, 2], [3, 4], [5, 6]]),
+            [[1, 3, 5], [2, 4, 6]]
+        )
+        self.assertMatrixAlmostEqual(
+            linalg.transpose([[1, 3, 5], [2, 4, 6]]),
+            [[1, 2], [3, 4], [5, 6]]
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
