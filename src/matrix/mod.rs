@@ -27,7 +27,7 @@ pub fn init(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
 /// generate identity matrices
 #[pyfunction]
-pub fn identity<'py>(size: usize) -> PyResult<Vec<Vec<i16>>> {
+fn identity<'py>(size: usize) -> PyResult<Vec<Vec<i16>>> {
     let mut result: Vec<Vec<i16>> = Vec::new();
 
     for r in 0..size {
@@ -47,7 +47,7 @@ pub fn identity<'py>(size: usize) -> PyResult<Vec<Vec<i16>>> {
 /// determinant
 /// TODO generics + type constraint
 #[pyfunction]
-pub fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
+fn determinant<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
     if _is_square(&matrix) {
         return Ok(_det(&matrix))
     }
@@ -134,7 +134,7 @@ fn _same_size(matrix_a: &Vec<Vec<f64>>, matrix_b: &Vec<Vec<f64>>) -> bool {
 
 /// determine whether or not a matrix is invertible
 #[pyfunction]
-pub fn is_invertible<'py>(matrix: Vec<Vec<f64>>) -> bool {
+fn is_invertible<'py>(matrix: Vec<Vec<f64>>) -> bool {
     if !_is_square(&matrix) {
         return false
     }
@@ -143,12 +143,12 @@ pub fn is_invertible<'py>(matrix: Vec<Vec<f64>>) -> bool {
 
 /// transpose matrix
 #[pyfunction]
-pub fn transpose<'py>(matrix: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+fn transpose<'py>(matrix: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     _transpose(&matrix)    
 }
 
 /// extracted transposition logic to allow internal use without copying matrices
-pub fn _transpose(matrix: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+fn _transpose(matrix: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
 
     for r in 0..matrix.len() {
@@ -165,7 +165,7 @@ pub fn _transpose(matrix: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
 
 /// invert matrix or return value error
 #[pyfunction]
-pub fn invert<'py>(matrix: Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
+fn invert<'py>(matrix: Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
     let n: usize = matrix.len();
 
     // compute cofactor matrix

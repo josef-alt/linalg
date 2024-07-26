@@ -30,7 +30,7 @@ pub fn init(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
 /// component-wise addition of two same-size vectors
 #[pyfunction]
-pub fn add<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<Vec<f64>> {
+fn add<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<Vec<f64>> {
     if a.len() != b.len() {
         return Err(PyValueError::new_err("vectors must be same length"))
     }
@@ -45,7 +45,7 @@ pub fn add<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<Vec<f64>> {
 
 /// component-wise subtraction of two same-size vectors
 #[pyfunction]
-pub fn sub<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<Vec<f64>> {
+fn sub<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<Vec<f64>> {
     if a.len() != b.len() {
         return Err(PyValueError::new_err("vectors must be same length"))
     }
@@ -59,13 +59,13 @@ pub fn sub<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<Vec<f64>> {
 
 /// multiply each element of a vector by a scalar
 #[pyfunction]
-pub fn scale<'py>(vector: Vec<f64>, scalar: f64) -> PyResult<Vec<f64>> {
+fn scale<'py>(vector: Vec<f64>, scalar: f64) -> PyResult<Vec<f64>> {
     Ok(vector.iter().map(|ele| ele * scalar).collect())
 }
 
 /// dot product
 #[pyfunction]
-pub fn dot_product<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<f64> {
+fn dot_product<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<f64> {
     if a.len() != b.len() {
         return Err(PyValueError::new_err("vectors must be same length"))
     }
@@ -79,7 +79,7 @@ pub fn dot_product<'py>(a: Vec<f64>, b: Vec<f64>) -> PyResult<f64> {
 
 /// magnitude
 #[pyfunction]
-pub fn magnitude<'py>(vector: Vec<f64>) -> f64 {
+fn magnitude<'py>(vector: Vec<f64>) -> f64 {
     return _magnitude(&vector)
 }
 
@@ -99,7 +99,7 @@ fn _magnitude(vector: &Vec<f64>) -> f64 {
 
 /// project vector v onto u
 #[pyfunction]
-pub fn project<'py>(u: Vec<f64>, v: Vec<f64>) -> PyResult<Vec<f64>> {
+fn project<'py>(u: Vec<f64>, v: Vec<f64>) -> PyResult<Vec<f64>> {
     let mag_u: f64 = _magnitude(&u);
     let dot_prod: f64 = dot_product(u.clone(), v)?;
     let scalar: f64 = dot_prod / (mag_u * mag_u);
@@ -109,7 +109,7 @@ pub fn project<'py>(u: Vec<f64>, v: Vec<f64>) -> PyResult<Vec<f64>> {
 
 /// normalization
 #[pyfunction]
-pub fn normalize<'py>(vector: Vec<f64>) -> PyResult<Vec<f64>> {
+fn normalize<'py>(vector: Vec<f64>) -> PyResult<Vec<f64>> {
     let norm: f64 = _magnitude(&vector);
     Ok(vector.iter().map(|ele| ele / norm).collect())
 }
