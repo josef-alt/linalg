@@ -1,5 +1,32 @@
-use pyo3::prelude::{pyfunction, PyResult};
+use pyo3::prelude::*;
 use pyo3::exceptions::PyValueError;
+
+/// set up vector module functions
+#[pymodule]
+fn vector(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(add, m)?)?;
+    m.add_function(wrap_pyfunction!(sub, m)?)?;
+    m.add_function(wrap_pyfunction!(scale, m)?)?;
+    m.add_function(wrap_pyfunction!(dot_product, m)?)?;
+    m.add_function(wrap_pyfunction!(magnitude, m)?)?;
+    m.add_function(wrap_pyfunction!(normalize, m)?)?;
+    m.add_function(wrap_pyfunction!(project, m)?)?;
+
+    Ok(())
+}
+
+/// initialize module
+pub fn init(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    let module = PyModule::new_bound(m.py(), "linalg.vector")?;
+    vector(&module)?;
+
+    m.add("vector", &module)?;
+    m.py().import_bound("sys")?
+        .getattr("modules")?
+        .set_item("linalg.vector", module)?;
+
+    Ok(())
+}
 
 /// component-wise addition of two same-size vectors
 #[pyfunction]

@@ -1,5 +1,29 @@
-use pyo3::prelude::{pyfunction, PyResult};
+use pyo3::prelude::*;
 use pyo3::exceptions::PyValueError;
+
+/// set up matrix module functions
+#[pymodule]
+fn matrix(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(identity, m)?)?;
+    m.add_function(wrap_pyfunction!(determinant, m)?)?;
+    m.add_function(wrap_pyfunction!(transpose, m)?)?;
+    m.add_function(wrap_pyfunction!(invert, m)?)?;
+
+    Ok(())
+}
+
+/// initialize submodule
+pub fn init(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    let module = PyModule::new_bound(m.py(), "linalg.matrix")?;
+    matrix(&module)?;
+
+    m.add("matrix", &module)?;
+    m.py().import_bound("sys")?
+        .getattr("modules")?
+        .set_item("linalg.matrix", module)?;
+
+    Ok(())
+}
 
 /// generate identity matrices
 #[pyfunction]
