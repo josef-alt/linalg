@@ -1,4 +1,10 @@
-use pyo3::prelude::*;
+use pyo3::prelude::{
+    pymodule, PyModule,
+    PyModuleMethods, PyAnyMethods,
+    pyfunction, PyResult,
+    Bound
+};
+use pyo3::wrap_pyfunction;
 use pyo3::exceptions::PyValueError;
 
 /// set up vector module functions
