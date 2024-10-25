@@ -7,6 +7,8 @@ use pyo3::prelude::{
 use pyo3::wrap_pyfunction;
 use pyo3::exceptions::PyValueError;
 
+use rayon::prelude::*;
+
 /// set up matrix module functions
 #[pymodule]
 fn matrix(m: &Bound<'_, PyModule>) -> PyResult<()> {
@@ -14,6 +16,8 @@ fn matrix(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(determinant, m)?)?;
     m.add_function(wrap_pyfunction!(transpose, m)?)?;
     m.add_function(wrap_pyfunction!(invert, m)?)?;
+
+	m.add_function(wrap_pyfunction!(det_p, m)?)?;
 
     Ok(())
 }
@@ -104,6 +108,40 @@ fn _extract(matrix: &Vec<Vec<f64>>, row: usize, col: usize) -> Vec<Vec<f64>> {
     }
 
     return result
+}
+
+/// attempting to parallelize determinant
+#[pyfunction]
+fn det_p<'py>(matrix: Vec<Vec<f64>>) -> PyResult<f64> {
+    if _is_square(&matrix) {
+        return Ok(_det_p(&matrix))
+    }
+    Err(PyValueError::new_err("matrix must be square"))
+}
+
+fn _det_p<'py>(matrix: &Vec<Vec<f64>>) -> f64 {
+    let n = matrix.len();
+    if n == 1 {
+        return matrix[0][0]
+    }
+    if n == 2 {
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    }
+
+	let mut det: f64 = (0..n).into_par_iter().map(|i| {
+		if matrix[0][i] != 0.0 {
+            let mut minor: f64 = _det(&_extract(&matrix, 0, i));
+            if i % 2 == 1 {
+                minor = -minor;
+            }
+
+			matrix[0][i] * minor
+        } else {
+			0.0
+		}
+	}).sum();
+
+    return det
 }
 
 /// determine if matrix is square
